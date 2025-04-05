@@ -97,7 +97,6 @@ class GooglePayPlatformView(
     }
 
     private fun handleActivityResult(resultCode: Int, data: String) {
-        Log.d("handleactivityResult","ana hon")
         checkoutComponents?.handleActivityResult(resultCode, data)
     }
 
