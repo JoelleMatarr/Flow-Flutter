@@ -196,3 +196,9 @@ class MyApp extends StatelessWidget {
   - For iOS: update only payment session id and paymentSessionSecret.
 
 ---
+
+## 🔥 Running the App
+```bash
+flutter pub get
+flutter run
+```
