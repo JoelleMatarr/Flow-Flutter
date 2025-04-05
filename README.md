@@ -183,7 +183,7 @@ class MyApp extends StatelessWidget {
 ## 🧾 Final Notes
 
 - Make sure your **Apple Pay merchant ID** is valid and configured on Apple Developer Portal.
-- Use correct payment session values by calling the /payment-session API
+- Use correct payment session values by calling the /payment-sessions API
   - For Android: update payment session id, paymentSessionToken (in this demo it is added in card and googlepay platformView.kt) and paymentSessionSecret.
   - For iOS: update only payment session id and paymentSessionSecret.
 
