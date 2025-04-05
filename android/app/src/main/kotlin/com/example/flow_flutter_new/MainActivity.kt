@@ -43,6 +43,7 @@ package com.example.flow_flutter_new
 
 import android.util.Log
 import com.example.flow_flutter_new.views.CardViewFactory
+import com.example.flow_flutter_new.views.FlowViewFactory
 import com.example.flow_flutter_new.views.GooglePayViewFactory
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.android.FlutterFragmentActivity
@@ -62,6 +63,7 @@ class MainActivity : FlutterFragmentActivity() {
         // ✅ Pass messenger to factories
         registry.registerViewFactory("flow_card_view", CardViewFactory(messenger, this))
         registry.registerViewFactory("flow_googlepay_view", GooglePayViewFactory(messenger,this))
+        registry.registerViewFactory("flow_flow_view", FlowViewFactory(messenger, this))
 
         // ✅ Set up MethodChannel (for future callbacks or control)
         MethodChannel(messenger, CHANNEL).setMethodCallHandler { call, result ->

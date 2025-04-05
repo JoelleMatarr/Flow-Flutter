@@ -1,28 +1,35 @@
 package com.example.flow_flutter_new
 
-import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.widget.FrameLayout
+import androidx.activity.ComponentActivity
 import androidx.compose.ui.platform.ComposeView
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.checkout.components.core.CheckoutComponentsFactory
 import com.checkout.components.interfaces.Environment
 import com.checkout.components.interfaces.api.CheckoutComponents
 import com.checkout.components.interfaces.component.CheckoutComponentConfiguration
 import com.checkout.components.interfaces.component.ComponentOption
 import com.checkout.components.interfaces.error.CheckoutError
+import com.checkout.components.interfaces.model.ComponentName
 import com.checkout.components.interfaces.model.PaymentMethodName
 import com.checkout.components.interfaces.model.PaymentSessionResponse
+import com.checkout.components.wallet.wrapper.GooglePayFlowCoordinator
+import io.flutter.embedding.android.FlutterFragmentActivity
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.platform.PlatformView
 import kotlinx.coroutines.*
 
-class CardPlatformView(
-    private val activity: Activity, // ✅ Correct type passed from factory
+class FlowPlatformView(
+    context: Context,
     args: Any?,
     messenger: BinaryMessenger
 ) : PlatformView {
 
+    private val activity = context as FlutterFragmentActivity // ✅ REQUIRED
     private val container = FrameLayout(activity)
     private val channel = MethodChannel(messenger, "checkout_bridge")
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -35,9 +42,21 @@ class CardPlatformView(
         val publicKey = params["publicKey"] as? String ?: ""
 
         if (sessionId.isEmpty() || sessionSecret.isEmpty() || publicKey.isEmpty()) {
-            Log.e("CardPlatformView", "Missing required session parameters")
+            Log.e("GooglePayPlatformView", "Missing session parameters")
 //            return
         }
+
+        val coordinator = GooglePayFlowCoordinator(
+            context = activity, // ✅ Requires ComponentActivity
+            handleActivityResult = { resultCode, data ->
+                handleActivityResult(resultCode, data)
+
+            }
+        )
+
+        Log.d("ContextType gpay flow", "Activity class: ${activity::class.java.name}")
+
+        val flowCoordinators = mapOf(PaymentMethodName.GooglePay to coordinator)
 
         val configuration = CheckoutComponentConfiguration(
             context = activity,
@@ -47,35 +66,41 @@ class CardPlatformView(
                 paymentSessionSecret = sessionSecret
             ),
             publicKey = publicKey,
-            environment = Environment.SANDBOX
+            environment = Environment.SANDBOX,
+            flowCoordinators = flowCoordinators
         )
+
+        container.setViewTreeLifecycleOwner(activity)
 
         scope.launch {
             try {
                 checkoutComponents = CheckoutComponentsFactory(config = configuration).create()
-                val flow = checkoutComponents.create(
-                    PaymentMethodName.Card,
-                    ComponentOption(showPayButton = false)
-                )
+                val gpayComponent = checkoutComponents.create(ComponentName.Flow)
 
-                if (flow.isAvailable()) {
+                if (gpayComponent.isAvailable()) {
                     withContext(Dispatchers.Main) {
                         val composeView = ComposeView(activity)
                         composeView.setContent {
-                            flow.Render()
+                            gpayComponent.Render()
                         }
                         container.addView(composeView)
                     }
                 } else {
-                    Log.e("CardPlatformView", "Card component not available")
+                    Log.e("GooglePayPlatformView", "Google Pay component not available")
                 }
+
             } catch (e: CheckoutError) {
-                Log.e("CardPlatformView", "Checkout error: ${e.message}")
+                Log.e("GooglePayPlatformView", "Checkout error: ${e.message}")
                 withContext(Dispatchers.Main) {
                     channel.invokeMethod("paymentError", e.message ?: "Unknown error")
                 }
             }
         }
+    }
+
+    private fun handleActivityResult(resultCode: Int, data: String) {
+        Log.d("handleactivityResult","ana hon")
+        checkoutComponents?.handleActivityResult(resultCode, data)
     }
 
     override fun getView(): FrameLayout = container

@@ -5,7 +5,7 @@ A Flutter application that demonstrates seamless integration with [Checkout.com'
 - 💳 Card payments
 - 🧾 Google Pay (Android)
 - 🍏 Apple Pay (iOS)
-
+- 🌊 Full Flow Component (Card + Apple Pay / Google Pay combined)
 ---
 
 ## 📱 Screens
@@ -14,7 +14,7 @@ The app consists of two buttons:
 
 - **Card Payment**: Loads the Card UI component.
 - **Google Pay / Apple Pay**: Loads the native wallet component (based on platform).
-
+- **Pay with Flow**: Loads the full Checkout Flow experience, including wallet and card options.
 ---
 
 ## 🔧 Project Structure
@@ -28,6 +28,8 @@ ios/
     │├── CheckoutApplePayPlatformView1 # Apple Pay UI with SwiftUI 
     │├── CheckoutCardViewFactory1 
     │├── CheckoutApplePayViewFactory1 
+    │├── CheckoutFlowViewFactory1 
+    │├── CheckoutFlowPlatformView1
     │└── DummyPlatformView1 # Displays fallback for unsupported iOS versions
 android/
 └── app/src/main/java/kotlin/com/example/flow_flutter_new/ 
@@ -36,6 +38,8 @@ android/
   ├── CardViewFactory.kt # Factory for Card component 
   ├── GooglePayPlatformView.kt # Renders Google Pay UI using Compose 
   ├── GooglePayViewFactory.kt # Factory for Google Pay component 
+  ├── FlowPlatformView.kt # Renders Flow UI using Compose 
+  ├── FlowViewFactory.kt # Factory for Flow component 
 ```
 
 ---
@@ -44,7 +48,7 @@ android/
 
 ### 🔹 Files
 - `AppDelegate.swift`: Registers platform views and method channel
-- `CheckoutPlatformView1.swift`: Contains both Card and Apple Pay renderers using SwiftUI
+- `CheckoutPlatformView1.swift`: Contains Card, Apple Pay and Flow renderers using SwiftUI
 
 ### 🔹 Apple Pay Setup
 Make sure you:
@@ -135,7 +139,7 @@ dependencies {
 
 ## 🧪 Flutter UI
 
-> In this demo we created a HomeScreen to display 2 buttons that initiate bottom sheets for Card and for GooglePay/ApplePay.
+> In this demo we created a HomeScreen to display 3 buttons that initiate bottom sheets for Card, GooglePay/ApplePay and full Flow component.
 
 ```dart
 import 'package:flutter/material.dart';
@@ -169,6 +173,10 @@ class MyApp extends StatelessWidget {
             ElevatedButton(
               onPressed: () => _launchCheckout("flow_googlepay_view"),
               child: Text("Pay with Google Pay / Apple Pay"),
+            ),
+            ElevatedButton(
+              onPressed: () => _launchCheckout("flow_flow_view"),
+              child: Text("Pay with Flow"),
             ),
           ],
         ),

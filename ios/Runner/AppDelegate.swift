@@ -26,6 +26,7 @@ import CheckoutComponentsSDK
         let registrar = controller.registrar(forPlugin: "checkout_bridge")
         registrar?.register(CheckoutCardViewFactory1(messenger: messenger), withId: "flow_view_card")
         registrar?.register(CheckoutApplePayViewFactory1(messenger: messenger), withId: "flow_view_applepay")
+        registrar?.register(CheckoutFlowViewFactory1(messenger: messenger), withId: "flow_view_flow")
 
 
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
