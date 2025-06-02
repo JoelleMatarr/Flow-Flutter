@@ -217,7 +217,74 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String? selectedPaymentMethod;
 
-  void showCardBottomSheet() {
+//   void showCardBottomSheet() {
+//   showModalBottomSheet(
+//     context: context,
+//     isScrollControlled: true,
+//     backgroundColor: Colors.transparent,
+//     builder: (_) {
+//       return FractionallySizedBox(
+//         heightFactor: 0.6,
+//         child: Container(
+//           padding: const EdgeInsets.all(16),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+//           ),
+//           child: Column(
+//             children: [
+//               Expanded(
+//                 child: ClipRRect(
+//                   borderRadius: BorderRadius.circular(12),
+//                   child: PlatformCardView(),
+//                 ),
+//               ),
+//               const SizedBox(height: 12),
+//               ElevatedButton(
+//                 onPressed: _tokenizeCard,
+//                 style: ElevatedButton.styleFrom(
+//                   backgroundColor: Colors.green,
+//                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
+//                 ),
+//                 child: const Text("Pay", style: TextStyle(fontSize: 16)),
+//               ),
+//             ],
+//           ),
+//         ),
+//       );
+//     },
+//   );
+// }
+
+//   Future<void> _tokenizeCard() async {
+//   const channel = MethodChannel('checkout_bridge');
+//   try {
+//     final token = await channel.invokeMethod('tokenizeCard');
+//     print('✅ Token received: $token');
+//     _showTokenDialog(token.toString());
+//   } catch (e) {
+//     print('❌ Tokenization failed: $e');
+//     _showTokenDialog('Tokenization failed: $e');
+//   }
+// }
+
+// void _showTokenDialog(String message) {
+//   showDialog(
+//     context: context,
+//     builder: (_) => AlertDialog(
+//       title: Text('Tokenization Result'),
+//       content: Text(message),
+//       actions: [
+//         TextButton(
+//           onPressed: () => Navigator.of(context).pop(),
+//           child: Text('OK'),
+//         ),
+//       ],
+//     ),
+//   );
+// }
+
+void showCardBottomSheet() {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -240,6 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
 
   void showFlowBottomSheet() {
     showModalBottomSheet(
@@ -370,8 +438,8 @@ class PlatformApplePayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-      'paymentSessionID': "ps_2vJHh6AfvMkxQ38KJ9W3cLBzsay",
-      'paymentSessionSecret': "pss_0800f53c-ab38-4bcd-811b-ef32aa289c78",
+     'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
+      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 
@@ -397,8 +465,8 @@ class PlatformCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-      'paymentSessionID': "ps_2vJHh6AfvMkxQ38KJ9W3cLBzsay",
-      'paymentSessionSecret': "pss_0800f53c-ab38-4bcd-811b-ef32aa289c78",
+      'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
+      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 
@@ -424,8 +492,8 @@ class PlatformFlowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-      'paymentSessionID': "ps_2vJHh6AfvMkxQ38KJ9W3cLBzsay",
-      'paymentSessionSecret': "pss_0800f53c-ab38-4bcd-811b-ef32aa289c78",
+      'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
+      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 

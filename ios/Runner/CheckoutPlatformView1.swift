@@ -52,11 +52,19 @@ class CheckoutCardPlatformView1: NSObject, FlutterPlatformView {
                 let component = try await checkout.create(.card())
 
                 if component.isAvailable {
-                    let controller = await UIHostingController(rootView: component.render())
-                    DispatchQueue.main.async {
-                        containerView.addSubview(controller.view)
-                        controller.view.frame = containerView.bounds
-                        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    await MainActor.run {
+                        Task {
+                            let renderedView = await component.render()
+                                .environment(\.colorScheme, .light)
+
+                            let controller = UIHostingController(rootView: renderedView)
+                            controller.overrideUserInterfaceStyle = .light
+                            controller.view.backgroundColor = .white
+
+                            containerView.addSubview(controller.view)
+                            controller.view.frame = containerView.bounds
+                            controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                        }
                     }
                 }
 
@@ -119,13 +127,22 @@ class CheckoutApplePayPlatformView1: NSObject, FlutterPlatformView {
                 let component = try await checkout.create(.applePay(merchantIdentifier: "merchant.com.flowmobile.checkout"))
 
                 if component.isAvailable {
-                    let controller = await UIHostingController(rootView: component.render())
-                    DispatchQueue.main.async {
-                        containerView.addSubview(controller.view)
-                        controller.view.frame = containerView.bounds
-                        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                    await MainActor.run {
+                        Task {
+                            let renderedView = await component.render()
+                                .environment(\.colorScheme, .light)
+
+                            let controller = UIHostingController(rootView: renderedView)
+                            controller.overrideUserInterfaceStyle = .light
+                            controller.view.backgroundColor = .white
+
+                            containerView.addSubview(controller.view)
+                            controller.view.frame = containerView.bounds
+                            controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                        }
                     }
                 }
+
 
             } catch {
                 print("Error rendering Apple Pay component: \(error)")

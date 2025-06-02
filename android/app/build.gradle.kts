@@ -50,7 +50,7 @@ flutter {
 
 
 dependencies {
-    implementation("com.checkout:checkout-android-components:1.0.0-beta-1")
+    implementation("com.checkout:checkout-android-components:1.0.0-beta-6")
      // Lifecycle + ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
 
