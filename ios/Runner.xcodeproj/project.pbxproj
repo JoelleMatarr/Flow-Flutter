@@ -634,7 +634,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/checkout/checkout-ios-components";
 			requirement = {
-				branch = main;
+				branch = "1.0.0-beta-8";
 				kind = branch;
 			};
 		};

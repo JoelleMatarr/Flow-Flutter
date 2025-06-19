@@ -438,8 +438,8 @@ class PlatformApplePayView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-     'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
-      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
+     'paymentSessionID': "ps_2yiaUgqnmnGYs7JtYztRzDBajr2",
+      'paymentSessionSecret': "pss_30136b5c-f38f-41cc-9493-398bec60264f",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 
@@ -465,8 +465,8 @@ class PlatformCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-      'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
-      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
+     'paymentSessionID': "ps_2yiaUgqnmnGYs7JtYztRzDBajr2",
+      'paymentSessionSecret': "pss_30136b5c-f38f-41cc-9493-398bec60264f",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 
@@ -492,8 +492,8 @@ class PlatformFlowView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const sessionParams = {
-      'paymentSessionID': "ps_2xxKfr3UGhvWM6TWBFXc4dOkiU9",
-      'paymentSessionSecret': "pss_a9d471c6-6f09-4c5b-b679-58806b6ee682",
+      'paymentSessionID': "ps_2yiaUgqnmnGYs7JtYztRzDBajr2",
+      'paymentSessionSecret': "pss_30136b5c-f38f-41cc-9493-398bec60264f",
       'publicKey': "pk_sbox_cwlkrqiyfrfceqz2ggxodhda2yh",
     };
 

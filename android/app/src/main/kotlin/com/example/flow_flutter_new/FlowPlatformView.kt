@@ -11,6 +11,7 @@ import com.checkout.components.core.CheckoutComponentsFactory
 import com.checkout.components.interfaces.Environment
 import com.checkout.components.interfaces.api.CheckoutComponents
 import com.checkout.components.interfaces.component.CheckoutComponentConfiguration
+import com.checkout.components.interfaces.component.ComponentCallback
 import com.checkout.components.interfaces.component.ComponentOption
 import com.checkout.components.interfaces.error.CheckoutError
 import com.checkout.components.interfaces.model.ComponentName
@@ -54,6 +55,21 @@ class FlowPlatformView(
             }
         )
 
+        val customComponentCallback = ComponentCallback(
+            onReady = { component ->
+                Log.d("flow component","test onReady "+component.name)
+            },
+            onSubmit = { component ->
+                Log.d("flow component ","test onSubmit "+component.name)
+            },
+            onSuccess = { component, paymentID ->
+                Log.d("flow payment success ${component.name}", paymentID)
+            },
+            onError = { component, checkoutError ->
+                Log.d("flow callback Error","onError "+checkoutError.message+", "+checkoutError.code)
+            },
+        )
+
         Log.d("ContextType gpay flow", "Activity class: ${activity::class.java.name}")
 
         val flowCoordinators = mapOf(PaymentMethodName.GooglePay to coordinator)
@@ -67,7 +83,8 @@ class FlowPlatformView(
             ),
             publicKey = publicKey,
             environment = Environment.SANDBOX,
-            flowCoordinators = flowCoordinators
+            flowCoordinators = flowCoordinators,
+            componentCallback = customComponentCallback
         )
 
         container.setViewTreeLifecycleOwner(activity)
